@@ -19,6 +19,11 @@ public class controller {
 	public String homeUrl() {
 		return home_MSG;
 	}
+
+	@GetMapping("/test")
+	public String testUrl() {
+		return "Testing end point success";
+	}
 	
 	@GetMapping("/route/{id}")
 	public String routeUrl(@PathVariable int id) {
