@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.Spring.Spring.Boot.Model.Employee;
 import com.Spring.Spring.Boot.Service.EmpServiceImpl;
+import com.google.gson.Gson;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/info")
@@ -34,10 +36,20 @@ public class controller {
 		return route_MSG;
 	}
 	
-	@RequestMapping(value = "/getAll",produces = "Appliction/json")
-	public ResponseEntity<List<Employee>> findAllEmp(){
+	@RequestMapping(value = "/getAll",produces = {"application/json"})
+	public ResponseEntity<String> findAllEmp(){
+		Gson gson=new Gson();
 		List<Employee> allEmployee=service.findAll();
-		return new ResponseEntity<List<Employee>>(allEmployee, HttpStatus.OK);
+	    return new ResponseEntity<String>(gson.toJson(allEmployee), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/emp/{empId}")
+	public ResponseEntity<Optional<Employee>> findEmpId(@PathVariable int empId){
+		Optional<Employee> empDataById=service.findbyempId(empId);
+		if(empDataById.isPresent()){
+			return new ResponseEntity<Optional<Employee>>(empDataById, HttpStatus.OK);
+		}
+		return new ResponseEntity<Optional<Employee>>(Optional.empty(), HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping("/testPost")

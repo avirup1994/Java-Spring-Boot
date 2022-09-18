@@ -16,17 +16,18 @@ public class EmpServiceImpl implements EmpService{
     private Logger logger=LogManager.getLogger(EmpServiceImpl.class);
 
     public List<Employee> findAll(){
-        List<Employee> allempdetails=empRepo.findAll();
-        allempdetails.forEach(n->System.out.println(n.toString()));
-        //logger.info("Fetching all employee details {} ",allempdetails);
-        return allempdetails;
+        return empRepo.findAll();             
+    }
+
+    public Optional<Employee> findbyempId(int empId){
+        return empRepo.findById(empId);
     }
 
     public void addEmployee(){
         List<Employee> allemp=new ArrayList<Employee>();
-        allemp.add(new Employee(12,"Avirup","De","Whitefield","Bangalore"));
-        logger.info("Save Employee started witd details {} ",allemp);
+        allemp.add(new Employee(14,"Tuya","Medda","New Valley  ","Kolkata"));
+        logger.info("Save Employee started");
         empRepo.saveAll(allemp);      
-        logger.info("Save Employee Completed with details {} ",allemp);
+        logger.info("Save Employee completed");
     }
 }
